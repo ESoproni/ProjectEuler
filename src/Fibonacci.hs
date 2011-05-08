@@ -11,3 +11,7 @@ module Fibonacci where
     
 -- a more elegant and effective solution
 fibonacci = 1:2:zipWith(+) fibonacci (tail fibonacci)    
+
+--  [1,2]: zipWith(+) [1,2]     [2]     ==> [1,2]:[1+2]         ==> [1,2,3]
+--  [1,2]: zipWith(+) [1,2,3]   [2,3]   ==> [1,2]:[1+2,2+3]     ==> [1,2,3,5]
+--  [1,2]: zipWith(+) [1,2,3,5] [2,3,5] ==> [1,2]:[1+2,2+3,3+5] ==> [1,2,3,5,8]

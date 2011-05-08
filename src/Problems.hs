@@ -50,5 +50,3 @@ problem5 = euler5 20
 
 euler5 :: Integer -> Integer
 euler5 z = head [x|x<- map(* (z * (z-1)))[1..product[1..z]], sum( map (mod x) [(div z 2) + 1..(z-2)]) == 0]
-
-  
