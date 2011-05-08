@@ -20,7 +20,9 @@ problem4 :: Int
 {- A palindromic number reads the same both ways. The largest palindrome 
    made from the product of two 2-digit numbers is 9009 = 91 
    Find the largest palindrome made from the product of two 3-digit numbers. -}
-problem4 =  maximum(filter palindrome $ Data.List.sort(multidown 999 100))
+-- problem4 =  maximum(filter palindrome $ Data.List.sort(multidown 999 100))
+problem4 = maximum(filter palindrome $ Data.List.sort(multidown [100..999]))
+problem4old = maximum(filter palindrome $ Data.List.sort(multidownold 999 100))
 
 tenEx :: Int -> Int -- Gives the 10 base exponent for the Int. example exponent 545 = 3
 tenEx b = truncate (logBase 10.0 (fromIntegral b))
@@ -35,11 +37,16 @@ subPalindrome x y = mod (div x (10 ^ (tenEx x - y + 1))) 10 == truncate( fromInt
 palindrome :: Int -> Bool -- Returns a boolean stating if an integer is a boolean
 palindrome p = length(takeWhile(subPalindrome p)$[1..(div (intLength p) 2)]) == div (intLength p) 2
 
-multidown :: Int -> Int ->[Int] -- returns a list that contains all products of two list made up of the number between a and b
-multidown x y
+multidownold :: Int -> Int ->[Int] -- returns a list that contains all products of two list made up of the number between a and b
+multidownold x y
   | x <= 0  = error "must be >=0 "
   | x <= y  = error "x must be larger than y"
-  | x > 0  = [a * z | z <- [x,x-1..y],a <- [x,x-1..y]]
+  | x > 0  = [a * z | z <- [x,x-1..y],a <- [x,x-1..y]] 
+
+multidown :: [Int] -> [Int]
+multidown [] = []
+multidown [x] = [x^2]
+multidown (x:xs) = [(last xs) ^2] ++ zipWith (*) (replicate (length(x:xs) - 1) (last xs)) (init (x:xs)) ++ multidown (init (x:xs))::[Int]
 
 
 problem5 :: Integer
